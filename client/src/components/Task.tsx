@@ -23,6 +23,7 @@ interface taskProps {
   status: string,
   id: string,
   setTasks: React.Dispatch<React.SetStateAction<task[]>>,
+  
 }
 
 import {

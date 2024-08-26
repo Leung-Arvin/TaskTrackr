@@ -17,8 +17,6 @@ type Board = {
 interface BoardProps {
   title: string | undefined;
   favorite: boolean;
-  boardId: string;
-  setBoards: React.Dispatch<React.SetStateAction<Board[]>>;
 }
 
 export type status =  "To-Do" | "In Progress" | "Completed";
@@ -32,7 +30,7 @@ type task = {
 
 const statuses: status[] = ['To-Do', 'In Progress', 'Completed'];
 
-const Board = ({title,favorite, setBoards}: BoardProps) => {
+const Board = ({title,favorite}: BoardProps) => {
   const {userId, boardId} = useParams();
   const {auth} = useAuth();
   const [isFavorite, setIsFavorite] = useState<boolean>(favorite || false);
@@ -40,6 +38,7 @@ const Board = ({title,favorite, setBoards}: BoardProps) => {
   
   const columns = statuses.map((status) => {
 
+    
     const tasksInColumn = tasks.filter((task) => task.status === status)
     return {
       status,
@@ -86,9 +85,7 @@ const Board = ({title,favorite, setBoards}: BoardProps) => {
     
 
     setIsFavorite(prevFavorite => !prevFavorite)
-    setBoards(prevBoards => 
-      prevBoards.map( board => board.board_id === boardId ? {...board, favorite:!favorite}: board)
-    )
+    
 
   }
 
@@ -101,7 +98,7 @@ const Board = ({title,favorite, setBoards}: BoardProps) => {
           Authorization: auth
         }
       });
-      console.log(tasks.data);
+      
       setTasks(tasks.data);
       
     }

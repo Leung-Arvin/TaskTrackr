@@ -6,12 +6,7 @@ import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
 
 
-type Board = {
-  board_id: string | undefined;
-  board_title: string;
-  date_created: string;
-  favorite: boolean;
-}
+
 
 
 const Boardpage = () => {
@@ -47,7 +42,7 @@ const Boardpage = () => {
         <Sidebar userId={userId}/>
       </div>
 
-      <Board title={board.board_title} favorite={board.favorite} boardId={boardId} />
+      <Board title={board.board_title} favorite={board.favorite} />
     </div>
   )
 }
