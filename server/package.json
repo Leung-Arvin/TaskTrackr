@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "node index.js",
-    "devStart2": "nodemon authServer.js"
+    "build": "cd ../client && npm install && npm run build",
+    "start": "npm run build && node index.js"
   },
   "author": "",
   "license": "ISC",
