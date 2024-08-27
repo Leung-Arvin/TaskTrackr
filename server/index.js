@@ -10,6 +10,11 @@ const bcrypt = require("bcrypt");
 
 const jwt = require("jsonwebtoken");
 
+
+
+//serving react files via express
+app.use('/', express.static('../client/dist'))
+
 // middleware
 app.use(cors());
 app.use(express.json());
