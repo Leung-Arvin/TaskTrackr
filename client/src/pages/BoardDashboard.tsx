@@ -39,6 +39,7 @@ import {z} from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
 import { useAuth } from "@/contexts/AuthContext"
+import { useUri } from "@/contexts/UriContext"
 
 export type Board = {
   id: string;
@@ -63,6 +64,8 @@ const BoardDashboard = () => {
   const [editingBoardId, setEditingBoardId] = useState<string | null>(null);
   const [Boards, setBoards] = useState<Board[]>([]);
   const {auth} = useAuth();
+  const {uri} = useUri();
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -75,7 +78,7 @@ const BoardDashboard = () => {
     const getBoards = async () => {
 
       
-      const Boards = await axios.get(`http://localhost:5000/api/board/all/${userId}`, {
+      const Boards = await axios.get(`${uri}/api/board/all/${userId}`, {
         headers: {
           Authorization: auth
         }
@@ -87,7 +90,7 @@ const BoardDashboard = () => {
 
     
     getBoards();
-  }, [auth, userId])
+  }, [uri, auth, userId])
 
   const toggleFavorite = async (boardId:string,favorite:boolean) => {
     
@@ -95,7 +98,7 @@ const BoardDashboard = () => {
       favorite: !favorite,
     }  
 
-    await axios.post(`http://localhost:5000/api/${userId}/board/updateFavorite/${boardId}`,newFavorite, {
+    await axios.post(`${uri}/api/${userId}/board/updateFavorite/${boardId}`,newFavorite, {
       headers: {
         Authorization: auth
       }
@@ -108,7 +111,7 @@ const BoardDashboard = () => {
   }
   
   const handleDelete = async (boardId: string) => {
-    await axios.delete(`http://localhost:5000/api/${userId}/board/delete/${boardId}`, {
+    await axios.delete(`${uri}/api/${userId}/board/delete/${boardId}`, {
       headers: {
         Authorization: auth
       }
@@ -123,7 +126,7 @@ const BoardDashboard = () => {
       boardTitle: values.boardTitle
     }
     
-    await axios.post(`http://localhost:5000/api/${userId}/board/updateTitle/${boardId}`, newTitle, {
+    await axios.post(`${uri}/api/${userId}/board/updateTitle/${boardId}`, newTitle, {
       headers: {
         Authorization: auth
       }

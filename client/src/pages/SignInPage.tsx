@@ -43,7 +43,7 @@ const SignInPage = () => {
   const navigate = useNavigate();
   const {uri} = useUri();
 
-  
+  console.log(uri)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,11 +58,11 @@ const SignInPage = () => {
     const user = {username:values.username, password: values.password};
     
  
-    const authToken = await axios.post(`http://${uri}/api/login`, user);
+    const authToken = await axios.post(`${uri}/api/login`, user);
     
     if (authToken) {
       
-      const user = await axios.get(`http://${uri}/api/users/${values.username}`, {
+      const user = await axios.get(`${uri}/api/users/${values.username}`, {
         headers: {
           Authorization: 'Bearer ' + authToken.data.accessToken
         }

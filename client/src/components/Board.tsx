@@ -6,6 +6,7 @@ import axios from 'axios';
 import Task from './Task';
 import { useAuth } from '@/contexts/AuthContext';
 import { useParams } from 'react-router-dom';
+import { useUri } from '@/contexts/UriContext';
 
 type Board = {
   board_id: string;
@@ -33,6 +34,8 @@ const statuses: status[] = ['To-Do', 'In Progress', 'Completed'];
 const Board = ({title,favorite}: BoardProps) => {
   const {userId, boardId} = useParams();
   const {auth} = useAuth();
+  const {uri} = useUri();
+
   const [isFavorite, setIsFavorite] = useState<boolean>(favorite || false);
   const [tasks, setTasks] = useState<task[]>([]);
   
@@ -55,7 +58,7 @@ const Board = ({title,favorite}: BoardProps) => {
       status: status
     }
     if (task) {
-      await axios.post(`http://localhost:5000/api/${userId}/task/updatestatus/${id}`, newStatus , {
+      await axios.post(`${uri}/api/${userId}/task/updatestatus/${id}`, newStatus , {
         headers: {
           Authorization: auth
         }
@@ -77,7 +80,7 @@ const Board = ({title,favorite}: BoardProps) => {
       favorite: !favorite
     }
     
-    await axios.post(`http://localhost:5000/api/${userId}/board/updateFavorite/${boardId}`, newFavorite , {
+    await axios.post(`${uri}/api/${userId}/board/updateFavorite/${boardId}`, newFavorite , {
       headers: {
         Authorization: auth
       }
@@ -93,7 +96,7 @@ const Board = ({title,favorite}: BoardProps) => {
     setIsFavorite(favorite);
 
     const getTasks = async () => {
-      const tasks = await axios.get(`http://localhost:5000/api/${userId}/task/getall/${boardId}`, {
+      const tasks = await axios.get(`${uri}/api/${userId}/task/getall/${boardId}`, {
         headers: {
           Authorization: auth
         }
@@ -103,7 +106,7 @@ const Board = ({title,favorite}: BoardProps) => {
       
     }
     getTasks();
-  },[userId, auth, favorite, boardId])
+  },[uri, userId, auth, favorite, boardId])
 
   return (
     <div className='w-full m-20'>

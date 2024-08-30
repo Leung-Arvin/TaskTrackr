@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useAuth } from "@/contexts/AuthContext";
+import { useUri } from "@/contexts/UriContext";
 
 interface SidebarProps {
   userId: string | undefined;
@@ -22,6 +23,8 @@ interface SidebarProps {
 
 const Sidebar = ({userId}: SidebarProps) => {
   const {auth, setAuth} = useAuth();
+  const {uri} = useUri();
+
   const [visible, setVisible]= useState(true);
   const [username,setUsername] = useState('');
 
@@ -29,7 +32,7 @@ const Sidebar = ({userId}: SidebarProps) => {
     const getUser = async () => {
       try {
         
-        const user = await axios.get(`http://localhost:5000/api/users/id/${userId}`, {
+        const user = await axios.get(`${uri}/api/users/id/${userId}`, {
           headers: {
             Authorization: auth
           }
@@ -43,7 +46,7 @@ const Sidebar = ({userId}: SidebarProps) => {
     }
 
     getUser();
-  }, [auth, userId])
+  }, [uri, auth, userId])
 
   const handleSignOut = () => {
     localStorage.removeItem('token');

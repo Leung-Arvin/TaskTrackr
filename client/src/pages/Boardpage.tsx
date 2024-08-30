@@ -4,6 +4,7 @@ import Sidebar  from '../components/Sidebar'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
+import { useUri } from '@/contexts/UriContext';
 
 
 
@@ -11,6 +12,7 @@ import { useAuth } from '@/contexts/AuthContext';
 
 const Boardpage = () => {
   const {auth} = useAuth();
+  const {uri} = useUri();
   const {userId, boardId} = useParams();
   const [board, setBoard] = useState<Board>({
     board_id: '',
@@ -22,7 +24,7 @@ const Boardpage = () => {
 
   useEffect(() => {
     const getBoard = async () => {
-      const board = await axios.get(`http://localhost:5000/api/${userId}/board/${boardId}`, {
+      const board = await axios.get(`${uri}/api/${userId}/board/${boardId}`, {
         headers: {
           Authorization: auth
         }
@@ -33,7 +35,7 @@ const Boardpage = () => {
     }
     getBoard();
     
-  }, [auth,userId, boardId])
+  }, [uri, auth,userId, boardId])
 
   
   return (

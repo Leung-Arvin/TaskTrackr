@@ -13,6 +13,7 @@ import axios from "axios"
 
 import { Link, useParams } from "react-router-dom"
 import { useAuth } from "@/contexts/AuthContext"
+import { useUri } from "@/contexts/UriContext"
 
 type Board = {
   board_id: string;
@@ -24,22 +25,28 @@ type Board = {
 
 const FavoriteDashboard = () => {
   const {auth} = useAuth();
+  const {uri} = useUri();
   const {userId} = useParams();
   const [Boards, setBoards] = useState<Board[]>([]);
 
   useEffect( () => {
     const getBoards = async () => {
-      const Boards = await axios.get(`http://localhost:5000/api/board/favorites/${userId}`, {
+      try {
+      const Boards = await axios.get(`${uri}/api/board/favorites/${userId}`, {
         headers: {
           Authorization: auth
         }
       });
+    
       setBoards(Boards.data);
+    } catch (err) {
+      console.error(err.message);
+    }
     }
 
     
     getBoards();
-  }, [auth, userId])
+  }, [uri, auth, userId])
 
 
   return (

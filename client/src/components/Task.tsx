@@ -52,6 +52,7 @@ import {useForm} from "react-hook-form"
 import { Button } from './ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useParams } from 'react-router-dom';
+import { useUri } from '@/contexts/UriContext';
 
 const formSchema = z.object({
   task_title: z.string().min(2, {
@@ -65,6 +66,7 @@ const formSchema = z.object({
 const Task = ({title, description,status, id, setTasks}:taskProps) => {
   const {userId} = useParams();
   const {auth} = useAuth();
+  const {uri} = useUri();
   const [hover,setHover] = useState(false);
   const [active, setActive] = useState(false);
 
@@ -78,7 +80,7 @@ const Task = ({title, description,status, id, setTasks}:taskProps) => {
 
   const handleDelete = async () => {
     
-    await axios.delete(`http://localhost:5000/api/${userId}/task/delete/${id}`, {
+    await axios.delete(`${uri}/api/${userId}/task/delete/${id}`, {
       headers: {
         Authorization: auth
       }
@@ -93,7 +95,7 @@ const Task = ({title, description,status, id, setTasks}:taskProps) => {
         title: values.task_title
       }
 
-      await axios.post(`http://localhost:5000/api/${userId}/task/updatetitle/${taskId}`, newTitle, {
+      await axios.post(`${uri}/api/${userId}/task/updatetitle/${taskId}`, newTitle, {
         headers: {
           Authorization: auth
         }
@@ -105,7 +107,7 @@ const Task = ({title, description,status, id, setTasks}:taskProps) => {
         description: values.task_description
       }
 
-      await axios.post(`http://localhost:5000/api/${userId}/task/updatedescript/${taskId}`, newDescription, {
+      await axios.post(`${uri}/api/${userId}/task/updatedescript/${taskId}`, newDescription, {
         headers: {
           Authorization: auth
         }

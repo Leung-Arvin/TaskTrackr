@@ -24,6 +24,7 @@ import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
 import { ArrowBigLeft } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext"
+import { useUri } from "@/contexts/UriContext"
 
 
 const formSchema = z.object({
@@ -37,6 +38,8 @@ const formSchema = z.object({
 const BoardForm = () => {
   // const [title,setTitle] = useState('');
   const {auth} = useAuth();
+  const {uri} = useUri();
+
   const {userId} = useParams();
   const navigate = useNavigate();
 
@@ -51,7 +54,7 @@ const BoardForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const newTitle = { boardTitle: values.boardTitle};
     try {
-      await axios.post(`http://localhost:5000/api/board/${userId}`, newTitle, {
+      await axios.post(`${uri}/api/board/${userId}`, newTitle, {
         headers: {
           Authorization: auth
         }

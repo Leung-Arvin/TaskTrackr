@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/dialog"
 import { useAuth } from "@/contexts/AuthContext"
 import { useParams } from "react-router-dom"
+import { useUri } from "@/contexts/UriContext"
 
 
 
@@ -55,6 +56,7 @@ const formSchema = z.object({
 const TaskForm = ({boardId, setTask} : TaskFormProps) => {
   const {userId} = useParams();
   const {auth} = useAuth();
+  const {uri} = useUri();
   const {toast} = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -73,7 +75,7 @@ const TaskForm = ({boardId, setTask} : TaskFormProps) => {
       status: "To-Do"
     }
 
-    const createdTask = await axios.post(`http://localhost:5000/api/${userId}/createtask/${boardId}`, newTask, {
+    const createdTask = await axios.post(`${uri}/api/${userId}/createtask/${boardId}`, newTask, {
       headers: {
         Authorization: auth
       }

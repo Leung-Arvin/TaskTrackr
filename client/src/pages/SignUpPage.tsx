@@ -28,6 +28,7 @@ import axios from "axios"
 
 import { useNavigate }from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext"
+import { useUri } from "@/contexts/UriContext"
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -41,6 +42,7 @@ const formSchema = z.object({
 
 const SignUpPage = () => {
   const {setAuth} = useAuth();
+  const {uri} = useUri();
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,9 +57,9 @@ const SignUpPage = () => {
     try {
     const user = {username:values.username, password: values.password};
     
-    const newUserAccessToken = await axios.post(`http://localhost:5000/api/users`, user);
+    const newUserAccessToken = await axios.post(`${uri}/api/users`, user);
     if (newUserAccessToken.data.accessToken != "unauthorized") {
-      const user = await axios.get(`http://localhost:5000/api/users/${values.username}`, {
+      const user = await axios.get(`${uri}/api/users/${values.username}`, {
         headers: {
           Authorization: 'Bearer ' + newUserAccessToken.data.accessToken
         }

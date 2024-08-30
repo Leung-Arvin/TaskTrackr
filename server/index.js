@@ -24,8 +24,9 @@ function authenticateToken(req,res,next) {
   const token = authHeader && authHeader.split(' ')[1]
   
   if(token == null) return res.sendStatus(401)
-
+  
   jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,user) => {
+    console.log(err)
     if (err) return res.sendStatus(403)
     req.user = user
     next()
@@ -50,9 +51,9 @@ app.post("/api/users", async (req,res) => {
       }
     ]).select()
 
+    
     const accessToken = jwt.sign(data[0],process.env.ACCESS_TOKEN_SECRET)
-    // const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
-    // refreshTokens.push(refreshToken)
+
     res.json({accessToken:accessToken})
 
   } catch (err) {
@@ -167,8 +168,9 @@ app.get("/api/board/all/:user_id", authenticateToken ,async (req,res) => {
 app.get("/api/:user_id/board/:board_id", authenticateToken ,async (req,res) => {
   try {
     const {user_id, board_id} = req.params;
-
+    
     if (req.user.id !== parseInt(user_id)) {
+      
       return res.sendStatus(403);
     }
 
@@ -187,15 +189,16 @@ app.get("/api/board/favorites/:user_id", authenticateToken , async (req,res) => 
   try {
     const {user_id} = req.params;
 
-    if (req.user.user_id !== parseInt(user_id)) {
+    if (req.user.id !== parseInt(user_id)) {
+      console.log("Hello world")
       return res.sendStatus(403);
     }
 
     const {data, error} = await supabase.from('Boards').select().eq('favorite', true)
-
+    console.log(error)
 
     res.status(201).json(data);
-  } catch {
+  } catch (err) {
     console.error(err.message);
     res.status(500).json({error:'Internal Server Error'});
   }
