@@ -27,6 +27,7 @@ import axios from "axios"
 
 import { useNavigate }from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext"
+import { useUri } from "@/contexts/UriContext"
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -40,6 +41,9 @@ const formSchema = z.object({
 const SignInPage = () => {
   const {setAuth} = useAuth();
   const navigate = useNavigate();
+  const {uri} = useUri();
+
+  console.log(uri);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,12 +57,12 @@ const SignInPage = () => {
     try {
     const user = {username:values.username, password: values.password};
     
-  
-    const authToken = await axios.post("http://localhost:5000/api/login", user);
+ 
+    const authToken = await axios.post(`http://${import.meta.env.VITE_API_REQUEST_URI}/api/login`, user);
     
     if (authToken) {
       
-      const user = await axios.get(`http://localhost:5000/api/users/${values.username}`, {
+      const user = await axios.get(`http://${import.meta.env.VITE_API_REQUEST_URI}/api/users/${values.username}`, {
         headers: {
           Authorization: 'Bearer ' + authToken.data.accessToken
         }

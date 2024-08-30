@@ -10,11 +10,13 @@ import {Toaster} from '@/components/ui/toaster'
 import SignInPage from './pages/SignInPage'
 import SignUpPage from './pages/SignUpPage'
 import { AuthProvider } from './contexts/AuthContext'
+import { UriProvider } from './contexts/UriContext'
 
 
 function App() {
   return (
     <AuthProvider>
+      <UriProvider>
       <ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
         
         <Routes>
@@ -28,6 +30,7 @@ function App() {
           </Routes>
         <Toaster/>
       </ThemeProvider>
+      </UriProvider>
     </AuthProvider>
   )
 }

@@ -65,7 +65,7 @@ app.post("/api/login", async (req,res) => {
   
   const {data, error} = await supabase.from('users').select().eq('username', req.body.username)
     
-  console.log(data);
+  
   if ( data.length === 0 || error) {
     res.sendStatus(400);
   }

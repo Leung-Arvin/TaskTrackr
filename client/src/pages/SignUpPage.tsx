@@ -55,7 +55,7 @@ const SignUpPage = () => {
     try {
     const user = {username:values.username, password: values.password};
     
-    const newUserAccessToken = await axios.post("http://localhost:5000/api/users", user);
+    const newUserAccessToken = await axios.post(`http://localhost:5000/api/users`, user);
     if (newUserAccessToken.data.accessToken != "unauthorized") {
       const user = await axios.get(`http://localhost:5000/api/users/${values.username}`, {
         headers: {
