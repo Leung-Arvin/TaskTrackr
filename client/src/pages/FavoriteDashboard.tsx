@@ -31,7 +31,6 @@ const FavoriteDashboard = () => {
 
   useEffect( () => {
     const getBoards = async () => {
-      try {
       const Boards = await axios.get(`${uri}/api/board/favorites/${userId}`, {
         headers: {
           Authorization: auth
@@ -39,9 +38,7 @@ const FavoriteDashboard = () => {
       });
     
       setBoards(Boards.data);
-    } catch (err) {
-      console.error(err.message);
-    }
+
     }
 
     
