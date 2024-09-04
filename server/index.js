@@ -63,9 +63,9 @@ app.post("/api/users", async (req,res) => {
 
 // login a user
 app.post("/api/login", async (req,res) => {
-  
+  console.log(req.body)
   const {data, error} = await supabase.from('users').select().eq('username', req.body.username)
-    
+  console.log(data);
   
   if ( data.length === 0 || error) {
     res.sendStatus(400);
@@ -74,15 +74,16 @@ app.post("/api/login", async (req,res) => {
     try {
       
       if(await bcrypt.compare(req.body.password, data[0].password)) {
-        const accessToken = jwt.sign(data[0],process.env.ACCESS_TOKEN_SECRET)
         
+        const accessToken = jwt.sign(data[0],process.env.ACCESS_TOKEN_SECRET) 
+        console.log(accessToken)
         res.json({accessToken:accessToken})
        
       } else {
         res.send("Not allowed")
       }
     } catch (err) {
-      res.status(500).send(err.message)
+      console.error(err)
     }
 })
 

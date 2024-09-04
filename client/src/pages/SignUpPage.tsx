@@ -64,10 +64,10 @@ const SignUpPage = () => {
           Authorization: 'Bearer ' + newUserAccessToken.data.accessToken
         }
       });
-
+      
       localStorage.setItem('token', 'Bearer ' + newUserAccessToken.data.accessToken)
       setAuth('Bearer ' + newUserAccessToken.data.accessToken)      
-      navigate(`/${user.data.user_id}`)
+      navigate(`/${user.data.id}`)
     } else {
       toast({title:"User is not authorized"})
     }  
