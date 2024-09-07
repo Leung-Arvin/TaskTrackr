@@ -11,6 +11,7 @@ import SignInPage from './pages/SignInPage'
 import SignUpPage from './pages/SignUpPage'
 import { AuthProvider } from './contexts/AuthContext'
 import { UriProvider } from './contexts/UriContext'
+import LandingPage from './pages/LandingPage'
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
       <ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
         
         <Routes>
-          <Route path="/" element={<BoardDashboard/>}/>
+          <Route path="/" element={<LandingPage/>}/>
           <Route path="/:userId" element={<BoardDashboard />}/>
           <Route path="/favorites/:userId" element={<FavoriteDashboard />}/>
           <Route path="/boardForm/:userId" element={<BoardForm />}/>

@@ -52,6 +52,7 @@ const Sidebar = ({userId}: SidebarProps) => {
     localStorage.removeItem('token');
     setUsername('')
     setAuth(null)
+    
   }
 
   return (
