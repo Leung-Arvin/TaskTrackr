@@ -4,6 +4,7 @@ import ShimmerButton from '@/components/magicui/shimmer-button'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 
+
 const LandingPage = () => {
   return (
     <div className='h-screen w-screen flex items-center justify-center '>
@@ -21,7 +22,7 @@ const LandingPage = () => {
                 
                 </div>
             </div>
-            <img className="h-96 w-96 ml-24"src="../../public/notes.png" alt="" />
+            <img className="h-96 w-96 ml-24"src={`../../notes.png`} alt="" />
         </div>
     </div>
   )
