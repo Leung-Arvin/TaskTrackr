@@ -43,8 +43,6 @@ const SignInPage = () => {
   const navigate = useNavigate();
   const {uri} = useUri();
 
-  console.log(uri)
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

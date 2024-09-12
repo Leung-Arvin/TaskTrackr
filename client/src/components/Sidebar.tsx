@@ -37,7 +37,7 @@ const Sidebar = ({userId}: SidebarProps) => {
             Authorization: auth
           }
         });
-        console.log(user)
+        
         setUsername(user.data.username)
       } catch (err: unknown) {
         console.error((err as Error).message);
