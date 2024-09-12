@@ -113,7 +113,7 @@ const SignInPage = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input className='rounded-[5px]' placeholder="Epic password" {...field}/>
+                      <Input type="password" className='rounded-[5px]' placeholder="Epic password" {...field}/>
                     </FormControl>
                     <FormDescription>
                       Please insert a secure password longer than 8 characters

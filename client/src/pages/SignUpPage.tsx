@@ -56,7 +56,7 @@ const SignUpPage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
     const user = {username:values.username, password: values.password};
-    
+    console.log(values.username, values.password)
     const newUserAccessToken = await axios.post(`${uri}/api/users`, user);
     if (newUserAccessToken.data.accessToken != "unauthorized") {
       const user = await axios.get(`${uri}/api/users/${values.username}`, {
@@ -112,7 +112,7 @@ const SignUpPage = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input className='rounded-[5px]' placeholder="Epic password" {...field}/>
+                      <Input  type="password" className='rounded-[5px]' placeholder="Epic password" {...field}/>
                     </FormControl>
                     <FormDescription>
                       Please insert a secure password longer than 8 characters

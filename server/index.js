@@ -40,7 +40,6 @@ app.post("/api/users", async (req,res) => {
   try {
     const salt = await bcrypt.genSalt()
     
-    
     const hashedPassword = await bcrypt.hash(req.body.password,salt);
     
     const user = {username: req.body.username, password: hashedPassword};
@@ -50,7 +49,6 @@ app.post("/api/users", async (req,res) => {
         password: user.password,
       }
     ]).select()
-
     
     const accessToken = jwt.sign(data[0],process.env.ACCESS_TOKEN_SECRET)
 
